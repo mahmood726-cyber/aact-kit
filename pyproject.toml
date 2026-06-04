@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "aact-kit"
+version = "0.1.0"
+description = "Unified local-AACT (ClinicalTrials.gov) data access: resolve, load, validate, aggregate across Postgres / SQLite / TSV / CSV / ZIP backends."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "mahmood726-cyber" }]
+keywords = ["aact", "clinicaltrials", "ctgov", "meta-analysis", "evidence-synthesis"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = ["pandas>=2.0"]
+
+[project.optional-dependencies]
+postgres = ["psycopg2-binary>=2.9"]
+dev = ["pytest>=7.0"]
+
+[project.urls]
+Homepage = "https://github.com/mahmood726-cyber/aact-kit"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/aact_kit"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
