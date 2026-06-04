@@ -61,11 +61,11 @@ class AACTLocation:
 _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 
 # Built-in discovery roots. Overridable via AACT_SNAPSHOT_ROOTS. ``~`` expands
-# per-user so this works for any Windows username, not just one machine.
+# per-user so this works for any username/machine — no drive or user is
+# hardcoded (point AACT_SNAPSHOT_ROOTS at e.g. D:/AACT-storage for other disks).
 _DEFAULT_ROOTS = [
     "~/AACT",
-    "C:/Users/user/AACT",     # legacy portfolio location
-    "D:/AACT-storage/AACT",   # legacy portfolio location
+    "~/aact",
 ]
 
 
