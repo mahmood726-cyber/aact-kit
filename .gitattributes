@@ -1,0 +1,32 @@
+# Normalize line endings: store text as LF and check out LF, so Windows
+# editors stop producing CRLF<->LF churn in git status/diffs.
+* text=auto eol=lf
+
+*.py    text eol=lf
+*.toml  text eol=lf
+*.cfg   text eol=lf
+*.ini   text eol=lf
+*.md    text eol=lf
+*.txt   text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.sh    text eol=lf
+
+# Windows-native scripts keep CRLF
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+
+# Binary — never normalize
+*.png   binary
+*.jpg   binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.zip   binary
+*.gz    binary
+*.whl   binary
+*.sqlite binary
+*.sqlite3 binary
+*.db    binary
+*.parquet binary
