@@ -52,6 +52,19 @@ def test_custom_series_name():
     assert out.name == "countries"
 
 
+def test_dedup_no_sort_preserves_insertion_order():
+    # dedup=True, sort=False must produce first-seen order, not arbitrary set
+    # iteration order.  Without dict.fromkeys the old set() path was
+    # non-deterministic across Python hash-seed runs.
+    df = pd.DataFrame([
+        {"nct_id": "NCT1", "name": "DrugB"},
+        {"nct_id": "NCT1", "name": "DrugA"},
+        {"nct_id": "NCT1", "name": "DrugB"},  # dup of first
+    ])
+    out = aggregate_lists(df, "name", dedup=True, sort=False)
+    assert out["NCT1"] == ["DrugB", "DrugA"]  # first-seen order, dup removed
+
+
 def test_missing_column_raises():
     df = pd.DataFrame([{"nct_id": "NCT1"}])
     with pytest.raises(KeyError):

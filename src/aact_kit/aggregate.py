@@ -52,10 +52,15 @@ def aggregate_lists(
             raise KeyError(f"column {col!r} not in DataFrame columns {list(df.columns)}")
 
     def _collapse(s: pd.Series) -> list[str]:
-        vals = s.dropna().astype(str)
+        vals_iter = s.dropna().astype(str)
+        # Use dict.fromkeys to dedup while preserving insertion order, so that
+        # dedup=True, sort=False gives a stable (first-seen) result instead of
+        # the undefined iteration order of a set().
         if dedup:
-            vals = set(vals)
-        return sorted(vals) if sort else list(vals)
+            vals_iter = list(dict.fromkeys(vals_iter))
+        else:
+            vals_iter = list(vals_iter)
+        return sorted(vals_iter) if sort else vals_iter
 
     out = df.groupby(group_col)[value_col].apply(_collapse)
     return out.rename(name or value_col)
